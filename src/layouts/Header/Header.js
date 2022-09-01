@@ -1,22 +1,22 @@
 import React from "react";
-import { Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
-
-import "./styles.css";
+import {Container} from "react-bootstrap";
+import {Link} from "react-router-dom";
 import logo from "../../assets/images/logo.png";
+import "./styles.css";
 
-const Header = () => {
+
+function Header() {
   return (
     <header className="container-header mb-5">
       <Container fluid>
         <div className="text-center">
           <Link to="/">
-            <img  src={logo} />
+            <img title="Go to home" alt="Go to home" src={logo} />
           </Link>
         </div>
       </Container>
     </header>
   );
-};
+}
 
 export default Header;

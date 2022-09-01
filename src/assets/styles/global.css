@@ -1,0 +1,90 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Black.ttf");
+}
+
+@font-face {
+  font-family: "OldSansBlack";
+  src: url("../fonts/OldSansBlack.ttf");
+}
+
+* {
+  font-family: "Roboto";
+}
+
+:root {
+  --brand_dark: #212529;
+  --darkest_gray: #333333;
+  --fighting: #c22e28;
+  --white: #fff;
+
+  --card_gray: #495057;
+}
+
+body {
+  background-color: var(--white);
+}
+
+.container-fluid {
+  max-width: 1144px;
+}
+
+*,
+*:focus,
+*:hover {
+  outline: none !important;
+}
+
+button:focus,
+input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.limit-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+ocus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border-color: var(--dark_gray) !important;
+  outline: 0 none;
+}
+
+@keyframes updown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.limit-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

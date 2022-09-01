@@ -1,8 +1,8 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Switch, Route} from "react-router-dom";
 
-import Home from "./pages/Home/Home";
-import Features from "./pages/Features/Features";
+import Home from "../pages/Home/Home";
+import Features from "../pages/Features/Features";
 
 function Routes() {
   return (
