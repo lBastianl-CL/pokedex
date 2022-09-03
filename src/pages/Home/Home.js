@@ -1,11 +1,11 @@
-import React from "react";
-import Header from "../../layouts/Header/Header";
+import React, { useEffect, useState } from "react";
+import "./styles.css";
+
 
 function Home({ history, ...props }) {
 
   return (
     <div>
-      <Header />
     </div>
   );
 }

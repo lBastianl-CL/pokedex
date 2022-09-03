@@ -5,7 +5,7 @@ import logo from "../../assets/images/logo.png";
 import "./styles.css";
 
 
-function Header() {
+const Header = () => {
   return (
     <header className="container-header mb-5">
       <Container fluid>

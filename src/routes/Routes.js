@@ -1,8 +1,8 @@
 import React from "react";
-import { BrowserRouter, Switch, Route} from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Home from "../pages/Home/Home";
-import Features from "../pages/Features/Features";
+
 
 function Routes() {
   return (
@@ -10,7 +10,6 @@ function Routes() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/:query?" component={Home} />
-          <Route exact path="/features/:name?" component={Features} />
         </Switch>
       </BrowserRouter>
     </div>

@@ -1,0 +1,230 @@
+.container-card {
+  transition: all 0.7s;
+  background-color: var(--card_gray);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  padding: 14px 12px;
+}
+
+.container-card:hover {
+  text-decoration: none;
+}
+
+.container-card-img {
+  z-index: 2;
+}
+
+.pokemon-name {
+  font-size: 20px;
+  text-transform: capitalize;
+  color: white;
+  text-align: center;
+  margin-top: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.pokemon-number {
+  margin-top: 4px;
+  color: var(--lightest_gray);
+}
+
+.type-item {
+  width: 48%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+/* normal */
+.container-normal::after {
+  content: "";
+  display: block;
+  width: 200px;
+  height: 200px;
+  background-image: linear-gradient(
+    45deg,
+    var(--normal) 0 1%,
+    transparent 50% 100%
+  );
+  position: absolute;
+  top: 0;
+  left: 10px;
+  border-radius: 100%;
+  z-index: -1;
+  opacity: 0.1;
+  transition: all 1.5s;
+}
+
+.container-card:hover .container-normal::after {
+  opacity: 1;
+  background-image: linear-gradient(45deg, var(--normal), var(--default_rgba));
+}
+
+
+.container-card:hover .container-fire::after {
+  opacity: 1;
+  background-image: linear-gradient(45deg, var(--fire), var(--default_rgba));
+}
+
+
+.container-card:hover .container-fairy::after {
+  opacity: 1;
+  background-image: linear-gradient(45deg, var(--fairy), var(--default_rgba));
+}
+
+.section-title {
+  font-family: "Roboto";
+  letter-spacing: 4px;
+  font-size: 16px;
+  padding-left: 6px;
+}
+
+/* Details */
+.overview {
+  line-height: 30px;
+  font-size: 20px;
+  font-family: "Roboto";
+}
+
+.sword,
+.shield {
+  border: 2px dashed var(--brand_dark) !important;
+  border-radius: 100%;
+}
+
+.sword {
+  background-color: var(--fighting) !important;
+}
+
+.shield {
+  background-color: var(--water) !important;
+}
+
+.container-versions button {
+  background: none;
+  border: none;
+  width: 70px;
+  height: 40px;
+}
+
+.container-versions img {
+  width: 30px;
+}
+
+.container-info {
+  background-color: var(--card_gray);
+  padding: 14px 10px;
+  border-radius: 10px;
+}
+
+.info-item {
+  width: 50%;
+  margin-bottom: 30px;
+}
+
+.info-item h4 {
+  font-size: 14px;
+  margin-bottom: 0;
+  letter-spacing: 4px;
+  display: flex;
+  align-items: center;
+  font-family: "OldSansBlack";
+}
+
+.info-item p {
+  margin-bottom: 0;
+  text-transform: capitalize;
+  font-size: 16px;
+  font-family: "OldSansBlack";
+}
+
+/* Stats */
+.container-bar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: var(--card_gray);
+  padding: 14px 12px;
+  border-radius: 10px;
+}
+
+.bar-item {
+  width: 100px;
+}
+
+.bar {
+  height: 200px;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: relative;
+  border-radius: 4px;
+}
+
+.bar-active {
+  width: 100px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.container-label {
+  width: 100%;
+  background-color: transparent;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.value {
+  color: var(--brand_dark);
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.label {
+  font-family: "OldSansBlack";
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
+@media screen and (max-width: 998px) {
+  .label {
+    font-size: 10px;
+    max-width: 40px;
+  }
+
+  .bar-active,
+  .bar-item {
+    width: 40px;
+  }
+}
+
+.container-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+}
+
+@media screen and (max-width: 767px) {
+  .evolution-item {
+    width: 100%;
+  }
+
+  .container-arrow {
+    transform: rotate(90deg);
+    margin: 20px 0;
+  }
+}
