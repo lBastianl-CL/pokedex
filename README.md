@@ -1,3 +1,12 @@
+# Inicializar la aplicación
+
+1- Entrar al proyecto.
+2- Abrir el terminal.
+3- Ejecutar npm install o yarn install.
+4- Iniciar el proyecto con npm star o yarn start.
+5- Se desplegará la aplicación en http://localhost:3000
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
