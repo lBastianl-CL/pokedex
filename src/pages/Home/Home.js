@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Spinner, Form, Button } from "react-bootstrap";
 import Header from "../../layouts/Header/Header";
 import Card from "../../components/Poke/Card";
 import pokeapi from "../../services/api/pokeapi";
@@ -9,7 +9,7 @@ import { CheckPokemons } from "../../services/utils/checkPoke";
 import "./styles.css";
 
 var arrayPokemons = [];
-const limit = 320; // 898 2022/09/01
+const limit = 100; // 898 2022/09/01
 var maxamountpokemons = 0;
 var maximum = 0;
 
@@ -44,20 +44,20 @@ function Home({ history, ...props }) {
 
   useEffect(() => {
     setLoading(true);
-    var listLocal = CheckPokemons();
-    if (listLocal === null) {
+    var listLocalStorage = CheckPokemons();
+    if (listLocalStorage === null) {
       LoadPokemons();
       return false;
     }
-    arrayPokemons = listLocal;
+    arrayPokemons = listLocalStorage;
     if (query !== undefined) {
-      var filterPokemons = listLocal.filter(
+      var filterPokemons = listLocalStorage.filter(
         (i) => i.name.includes(query.toLowerCase()) || i.number.includes(query)
       );
 
       ShowResult(filterPokemons.length, filterPokemons.slice(0, 1));
     } else {
-      ShowResult(listLocal.length, listLocal.slice(0, 1));
+      ShowResult(listLocalStorage.length, listLocalStorage.slice(0, 1));
     }
     setLoading(false);
   }, []);
@@ -70,7 +70,7 @@ function Home({ history, ...props }) {
         `/pokemon/${pokemonsLs.data.results[i].name}`
       );
 
-      var obj = {
+      var objPokemon = {
         name: PokemonsFeatures.data.name,
         id: PokemonsFeatures.data.id,
         number: PokemonsFeatures.data.id.toString().padStart(3, "0"),
@@ -78,12 +78,12 @@ function Home({ history, ...props }) {
           PokemonsFeatures.data.sprites.versions["generation-v"]["black-white"]
             .animated.front_default,
       };
-      allPokemons.push(obj);
+      allPokemons.push(objPokemon);
     }
 
     RescuePokemons(allPokemons);
     arrayPokemons = allPokemons;
-    ShowResult(allPokemons.length, allPokemons.slice(0,1));
+    ShowResult(allPokemons.length, allPokemons.slice(0, 1));
     setLoading(false);
   }
 
@@ -92,7 +92,20 @@ function Home({ history, ...props }) {
       <Header />
       <Container fluid>
         <Search history={history} query={query} />
-        {(
+        {loading ? (
+          <div className="d-flex justify-content-center">
+            <Button variant="danger" disabled>
+              <Spinner
+                as="span"
+                animation="grow"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              Estamos cargando todos los pokemones para una mejor experiencia en la búsqueda (Actualmente hay {limit} pokemones disponibles).
+            </Button>
+          </div>
+        ) : (
           <div className="box">
             <div>
               <Row>
