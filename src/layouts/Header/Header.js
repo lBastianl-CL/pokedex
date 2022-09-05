@@ -1,6 +1,6 @@
 import React from "react";
-import {Container} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import { Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import "./styles.css";
 
