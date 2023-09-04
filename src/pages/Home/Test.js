@@ -102,7 +102,7 @@ function Home({ history, ...props }) {
                 role="status"
                 aria-hidden="true"
               />
-              Estamos cargando todos los pokemones para una mejor experiencia en la búsqueda (Actualmente hay {limit} pokemones disponibles).
+              Estama cargando todos los pokemones para una mejor experiencia en la búsqueda (Actualmente hay {limit} pokemones disponibles).
             </Button>
           </div>
         ) : (
