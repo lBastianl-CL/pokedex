@@ -6,7 +6,6 @@
 4- Iniciar el proyecto con npm start o yarn start.\
 5- Se desplegará la aplicación en http://localhost:3000.\
 
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -56,6 +55,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ### Code Splitting
 
+Pequeño cambio
 This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
 ### Analyzing the Bundle Size
