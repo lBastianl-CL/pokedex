@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Spinner, Form, Button } from "react-bootstrap";
+import React, { useEffect, useState, useCallback } from "react";
+import { Container, Row, Col, Spinner, Button } from "react-bootstrap";
 import Header from "../../layouts/Header/Header";
 import Card from "../../components/Poke/Card";
 import pokeapi from "../../services/api/pokeapi";
@@ -8,10 +8,9 @@ import { RescuePokemons } from "../../services/utils/rescuePoke";
 import { CheckPokemons } from "../../services/utils/checkPoke";
 import "./styles.css";
 
-var arrayPokemons = [];
-const limit = 100; // 898 2022/09/01
-var maxamountpokemons = 0;
-var maximum = 0;
+const limit = 100; 
+let arrayPokemons = [];
+let maximum = 0;
 
 function Home({ history, ...props }) {
   const { query } = props.match.params;
@@ -19,73 +18,75 @@ function Home({ history, ...props }) {
   const [loading, setLoading] = useState(true);
   const [pokemons, setPokemons] = useState([]);
 
-  function ShowResult(maxamountpokemons, pokemons) {
-    maxamountpokemons = maximum;
+  const ShowResult = useCallback((maxamountpokemons, pokemons) => {
+    maximum = maxamountpokemons;
     setPokemons(pokemons);
-  }
+  }, []);
 
   useEffect(() => {
-    setLoading(true);
-    if (query === undefined) {
-      setLoading(false);
-      return false;
-    }
+    const fetchPokemons = async () => {
+      setLoading(true);
+      if (!query) {
+        setLoading(false);
+        return;
+      }
 
-    history.push(`/${query}`);
-    var filterPokemons = arrayPokemons.filter((item) => {
-      return (
+      history.push(`/${query}`);
+      const filterPokemons = arrayPokemons.filter((item) => 
         item.name.includes(query.toLowerCase()) || item.number.includes(query)
-      );
-    });
-
-    ShowResult(filterPokemons.length, filterPokemons.slice(0, 1));
-    setLoading(false);
-  }, [query]);
-
-  useEffect(() => {
-    setLoading(true);
-    var listLocalStorage = CheckPokemons();
-    if (listLocalStorage === null) {
-      LoadPokemons();
-      return false;
-    }
-    arrayPokemons = listLocalStorage;
-    if (query !== undefined) {
-      var filterPokemons = listLocalStorage.filter(
-        (i) => i.name.includes(query.toLowerCase()) || i.number.includes(query)
       );
 
       ShowResult(filterPokemons.length, filterPokemons.slice(0, 1));
-    } else {
-      ShowResult(listLocalStorage.length, listLocalStorage.slice(0, 1));
-    }
-    setLoading(false);
-  }, []);
+      setLoading(false);
+    };
 
-  async function LoadPokemons() {
+    fetchPokemons();
+  }, [query, ShowResult, history]);
+
+  useEffect(() => {
+    const initializePokemons = async () => {
+      setLoading(true);
+      const listLocalStorage = CheckPokemons();
+      if (!listLocalStorage) {
+        await LoadPokemons();
+        return;
+      }
+      arrayPokemons = listLocalStorage;
+      if (query) {
+        const filterPokemons = listLocalStorage.filter(
+          (i) => i.name.includes(query.toLowerCase()) || i.number.includes(query)
+        );
+        ShowResult(filterPokemons.length, filterPokemons.slice(0, 1));
+      } else {
+        ShowResult(listLocalStorage.length, listLocalStorage.slice(0, 1));
+      }
+      setLoading(false);
+    };
+
+    initializePokemons();
+  }, [query, ShowResult]);
+
+  const LoadPokemons = async () => {
     let pokemonsLs = await pokeapi.get(`/pokemon?limit=${limit}`);
-    var allPokemons = [];
-    for (var i = 0; i < pokemonsLs.data.results.length; i++) {
-      let PokemonsFeatures = await pokeapi.get(
-        `/pokemon/${pokemonsLs.data.results[i].name}`
-      );
-
-      var objPokemon = {
-        name: PokemonsFeatures.data.name,
-        id: PokemonsFeatures.data.id,
-        number: PokemonsFeatures.data.id.toString().padStart(3, "0"),
-        image:
-          PokemonsFeatures.data.sprites.versions["generation-v"]["black-white"]
-            .animated.front_default,
-      };
-      allPokemons.push(objPokemon);
-    }
+    let allPokemons = await Promise.all(
+      pokemonsLs.data.results.map(async (pokemon) => {
+        let PokemonsFeatures = await pokeapi.get(`/pokemon/${pokemon.name}`);
+        return {
+          name: PokemonsFeatures.data.name,
+          id: PokemonsFeatures.data.id,
+          number: PokemonsFeatures.data.id.toString().padStart(3, "0"),
+          image:
+            PokemonsFeatures.data.sprites.versions["generation-v"]["black-white"]
+              .animated.front_default,
+        };
+      })
+    );
 
     RescuePokemons(allPokemons);
     arrayPokemons = allPokemons;
     ShowResult(allPokemons.length, allPokemons.slice(0, 1));
     setLoading(false);
-  }
+  };
 
   return (
     <div>
@@ -109,20 +110,14 @@ function Home({ history, ...props }) {
           <div className="box">
             <div>
               <Row>
-                {pokemons.map((item) => {
-                  return (
-                    <Col key={item.id} xs={12} sm={6} lg={3}>
-                      <Card
-                        name={item.name}
-                        id={item.id}
-                      />
-                    </Col>
-                  );
-                })}
+                {pokemons.map((item) => (
+                  <Col key={item.id} xs={12} sm={6} lg={3}>
+                    <Card name={item.name} id={item.id} />
+                  </Col>
+                ))}
               </Row>
             </div>
           </div>
-
         )}
       </Container>
     </div>
